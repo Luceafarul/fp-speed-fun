@@ -5,9 +5,7 @@ final case class Ratio(a: Int, b: Int) {
 }
 
 object Ratio {
-  def compare(first: List[Ratio], second: List[Ratio]): Boolean = {
-    first.size == second.size && first.zip(second).forall {
-      case (r1, r2) => r1 === r2
-    }
+  val ratioEq = new Eq[Ratio] {
+    override def ===(x: Ratio, y: Ratio) = x.a * y.b == x.b * y.a
   }
 }
