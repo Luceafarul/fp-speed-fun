@@ -5,9 +5,11 @@ trait Eq[T] {
 }
 
 object Eq {
-  def compare[T](first: List[T], second: List[T])(implicit f: Eq[T]): Boolean = {
-    first.size == second.size && first.zip(second).forall {
-      case (r1, r2) => f.===(r1, r2)
+  import example.syntax.eq._
+
+  implicit def compare[T](implicit eq: Eq[T]): Eq[List[T]] = {
+    (first: List[T], second: List[T]) => first.size == second.size && first.zip(second).forall {
+      case (r1, r2) => r1 req r2
     }
   }
 }
